@@ -1,6 +1,5 @@
 import Logo from "/src/assets/logo.svg";
 import AvatarPng from "/src/assets/image-avatar.png";
-
 import clsx from "clsx";
 
 function Header(props: {
