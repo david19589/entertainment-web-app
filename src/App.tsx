@@ -1,15 +1,15 @@
-import { useState } from "react";
 import Header from "./components/header";
-import Home from "./components/home";
+import { BrowserRouter } from "react-router-dom";
+import PageRoutes from "./components/routes";
 
 function App() {
-  const [selected, setSelected] = useState("home");
-
   return (
-    <div className="bg-[#10141E]">
-      <Header selected={selected} setSelected={setSelected} />
-      <Home />
-    </div>
+    <BrowserRouter>
+      <div className="bg-[#10141E]">
+        <Header />
+        <PageRoutes />
+      </div>
+    </BrowserRouter>
   );
 }
 

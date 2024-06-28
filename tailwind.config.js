@@ -823,7 +823,7 @@ export default {
       150: "1.5",
     },
     screens: {
-      sm: "320px",
+      sm: "352px",
       md: "768px",
       lg: "1440px",
     },

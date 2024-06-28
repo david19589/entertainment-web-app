@@ -1,11 +1,15 @@
 import { ImageSrc } from "../data";
 import movieSvg from "/src/assets/icon-category-movie.svg";
+import tvSvg from "/src/assets/icon-category-tv.svg";
 import bookmarkSvg from "/src/assets/icon-bookmark-empty.svg";
 import bookmarkFullSvg from "/src/assets/icon-bookmark-full.svg";
 import { useState } from "react";
 
 interface data {
   Data: {
+    isBookmarked: boolean;
+    category: string;
+    rating: string;
     year: number;
     title: string;
     thumbnail: {
@@ -33,53 +37,67 @@ function Recommended({ Data }: data) {
   return (
     <div className="relative">
       <div className="pt-[1.5rem]">
-        <h1 className="text-[1.3rem] font-[400] leading-[1.6rem] tracking-[-0.02rem] text-[#FFF] mb-[1rem]">
+        <h1 className="md:text-[2rem] md:leading-[2.5rem] md:tracking-[-0.03rem] md:mb-[2rem] text-[1.3rem] font-[400] leading-[1.6rem] tracking-[-0.02rem] text-[#FFF] mb-[1rem]">
           Recommended for you
         </h1>
-        <ul className="flex flex-wrap justify-center max-w-[74rem] w-full">
-          {Data.map((item, index) => (
-            <li key={index} className="max-w-[10rem]">
-              {!item.isTrending && (
-                <div className="relative max-w-[15rem] mr-[1rem] mb-[1rem]">
+        <ul className="lg:gap-[2rem] md:gap-[1.5rem] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1rem]">
+          {Data.filter((item) => !item.isTrending).map((item, index) => (
+            <li key={index} className="w-full">
+              <div className="relative w-full">
+                <img
+                  className="md:hidden w-full h-auto rounded-lg"
+                  src={ImageSrc[item.thumbnail.regular?.small ?? ""]}
+                  alt={item.title}
+                />
+                <img
+                  className="lg:hidden md:flex hidden w-full h-auto rounded-lg"
+                  src={ImageSrc[item.thumbnail.regular?.medium ?? ""]}
+                  alt={item.title}
+                />
+                <img
+                  className="lg:flex hidden w-full h-auto rounded-lg"
+                  src={ImageSrc[item.thumbnail.regular?.large ?? ""]}
+                  alt={item.title}
+                />
+                <div
+                  onClick={() => handleBookmark(item.title)}
+                  className="absolute top-[1rem] right-[1rem] bg-[#10141e83] p-[0.6rem] rounded-full cursor-pointer"
+                >
                   <img
-                    className="w-full max-w-[15rem] h-auto rounded-lg mr-[1rem]"
-                    src={ImageSrc[item.thumbnail.regular?.small ?? ""]}
-                    alt={item.title}
+                    src={
+                      item.isBookmarked || bookmarked[item.title]
+                        ? bookmarkFullSvg
+                        : bookmarkSvg
+                    }
+                    alt="bookmark"
                   />
-                  <div
-                    onClick={() => handleBookmark(item.title)}
-                    className="absolute top-[1rem] right-[1rem] bg-[#10141e83] p-[0.6rem] rounded-full cursor-pointer"
-                  >
-                    <img
-                      src={
-                        bookmarked[item.title] ? bookmarkFullSvg : bookmarkSvg
-                      }
-                      alt="bookmark"
-                    />
-                  </div>
-                  <div className="flex items-center gap-[0.5rem] ">
-                    <h3 className="text-[0.8rem] font-[400] leading-[1rem] opacity-[75%] text-[#FFF]">
-                      {item.year}
-                    </h3>
-                    <span className="text-[#FFF] opacity-[50%] mb-[0.4rem]">
-                      .
-                    </span>
-                    <img className="h-max" src={movieSvg} alt="tvSvg" />
-                    <h2 className="text-[0.8rem] font-[400] leading-[1rem] opacity-[75%] text-[#FFF]">
-                      Movie
-                    </h2>
-                    <span className="text-[#FFF] opacity-[50%] mb-[0.4rem]">
-                      .
-                    </span>
-                    <h2 className="text-[0.8rem] font-[400] leading-[1rem] opacity-[75%] text-[#FFF]">
-                      PG
-                    </h2>
-                  </div>
-                  <h1 className="text-[1rem] font-[400] leading-[1.18rem] text-[#FFF]">
-                    {item.title}
-                  </h1>
                 </div>
-              )}
+                <div className="flex items-center sm:gap-[0.5rem] gap-[0.1rem] mt-[0.5rem]">
+                  <h3 className="text-[0.8rem] font-[400] leading-[1rem] opacity-[75%] text-[#FFF]">
+                    {item.year}
+                  </h3>
+                  <span className="text-[#FFF] opacity-[50%] mb-[0.4rem]">
+                    .
+                  </span>
+                  <img
+                    className="h-max"
+                    src={item.category === "Movie" ? movieSvg : tvSvg}
+                    alt={item.category === "Movie" ? "Movie" : "TV Series"}
+                  />
+                  <h2 className="text-[0.8rem] font-[400] leading-[1rem] opacity-[75%] text-[#FFF]">
+                    {item.category}
+                  </h2>
+                  <span className="text-[#FFF] opacity-[50%] mb-[0.4rem]">
+                    .
+                  </span>
+                  <h2 className="text-[0.8rem] font-[400] leading-[1rem] opacity-[75%] text-[#FFF]">
+                    {item.rating}
+                  </h2>
+                </div>
+                <h1 className="md:text-[1.5rem] md:leading-[2rem] text-[1rem] font-[400] leading-[1.18rem] text-[#FFF]">
+                  {item.title}
+                </h1>
+              </div>
             </li>
           ))}
         </ul>

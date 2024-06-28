@@ -1,29 +1,12 @@
-import { ImageSrc } from "../data";
+import { ImageSrc } from "../home/data";
+import Data from "../data.json";
 import movieSvg from "/src/assets/icon-category-movie.svg";
 import tvSvg from "/src/assets/icon-category-tv.svg";
 import bookmarkSvg from "/src/assets/icon-bookmark-empty.svg";
 import bookmarkFullSvg from "/src/assets/icon-bookmark-full.svg";
 import { useState } from "react";
 
-interface data {
-  Data: {
-    category: string;
-    rating: string;
-    year: number;
-    title: string;
-    thumbnail: {
-      regular?: { small?: string; medium?: string; large?: string };
-      trending?: {
-        small?: string;
-        medium?: string;
-        large?: string;
-      };
-    };
-    isTrending: boolean;
-  }[];
-}
-
-function Trending({ Data }: data) {
+function TvSeries() {
   const [bookmarked, setBookmarked] = useState<{ [key: string]: boolean }>({});
 
   const handleBookmark = (title: string) => {
@@ -34,36 +17,40 @@ function Trending({ Data }: data) {
   };
 
   return (
-    <div className="relative">
-      <div className="pt-[1.5rem] overflow-hidden">
-        <h1 className="md:text-[2rem] md:leading-[2.5rem] md:tracking-[-0.03rem] md:mb-[1.5rem] text-[1.3rem] font-[400] leading-[1.6rem] tracking-[-0.02rem] text-[#FFF] mb-[1rem]">
-          Trending
-        </h1>
-        <ul className="flex flex-row transition-all duration-500 overflow-x-auto custom-scrollbar">
-          {Data.filter((item) => item.isTrending).map((item, index) => (
-            <li key={index} className="flex-none">
-              <div className="relative">
+    <div className="relative lg:px-[2.3rem] md:px-[1.5rem] px-[1rem] pt-[1.5rem] pb-[4rem]">
+      <h1 className="md:text-[2rem] md:leading-[2.5rem] md:tracking-[-0.03rem] md:mb-[2rem] text-[1.3rem] font-[400] leading-[1.6rem] tracking-[-0.02rem] text-[#FFF] mb-[1rem]">
+        TV Series
+      </h1>
+      <ul className="lg:gap-[2rem] md:gap-[1.5rem] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1rem]">
+        {Data.filter((item) => (item.category === "TV Series")).map(
+          (item, index) => (
+            <li key={index} className="w-full">
+              <div className="relative w-full">
                 <img
-                  className="lg:hidden md:w-[30rem] md:mr-[2rem] w-[15rem] h-auto rounded-lg mr-[1rem]"
-                  src={ImageSrc[item.thumbnail.trending?.small ?? ""]}
+                  className="md:hidden w-full h-auto rounded-lg"
+                  src={ImageSrc[item.thumbnail.regular?.small ?? ""]}
                   alt={item.title}
                 />
                 <img
-                  className="lg:flex w-[30rem] mr-[2rem] hidden h-auto rounded-lg"
-                  src={ImageSrc[item.thumbnail.trending?.large ?? ""]}
+                  className="lg:hidden md:flex hidden w-full h-auto rounded-lg"
+                  src={ImageSrc[item.thumbnail.regular?.medium ?? ""]}
                   alt={item.title}
                 />
-                <div className="md:h-[6rem] absolute bottom-0 w-full h-[4.5rem] rounded-b-lg bg-gradient-to-b from-[#00000000] to-[#000000d3]"></div>
+                <img
+                  className="lg:flex hidden w-full h-auto rounded-lg"
+                  src={ImageSrc[item.thumbnail.regular?.large ?? ""]}
+                  alt={item.title}
+                />
                 <div
                   onClick={() => handleBookmark(item.title)}
-                  className="md:right-[4rem] absolute top-[1rem] right-[2rem] bg-[#10141e83] p-[0.6rem] rounded-full cursor-pointer"
+                  className="absolute top-[1rem] right-[1rem] bg-[#10141e83] p-[0.6rem] rounded-full cursor-pointer"
                 >
                   <img
                     src={bookmarked[item.title] ? bookmarkFullSvg : bookmarkSvg}
                     alt="bookmark"
                   />
                 </div>
-                <div className="md:bottom-[2.8rem] flex items-center gap-[0.5rem] absolute bottom-[2.5rem] ml-[1rem]">
+                <div className="flex items-center sm:gap-[0.5rem] gap-[0.1rem] mt-[0.5rem]">
                   <h3 className="text-[0.8rem] font-[400] leading-[1rem] opacity-[75%] text-[#FFF]">
                     {item.year}
                   </h3>
@@ -85,16 +72,16 @@ function Trending({ Data }: data) {
                     {item.rating}
                   </h2>
                 </div>
-                <h1 className="md:text-[1.5rem] md:leading-[2rem] text-[1rem] font-[400] leading-[1.18rem] text-[#FFF] absolute bottom-[1rem] ml-[1rem]">
+                <h1 className="md:text-[1.5rem] md:leading-[2rem] text-[1rem] font-[400] leading-[1.18rem] text-[#FFF]">
                   {item.title}
                 </h1>
               </div>
             </li>
-          ))}
-        </ul>
-      </div>
+          )
+        )}
+      </ul>
     </div>
   );
 }
 
-export default Trending;
+export default TvSeries;
