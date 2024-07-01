@@ -110,11 +110,11 @@ function LogIn(props: { setShowAvatar: (status: boolean) => void }) {
             />
           </form>
           <div className="flex gap-[0.5rem]">
-            <h3 className="text-[1rem] leading-[1.2rem] font-[400] text-[#FFF]">
+            <h3 className="text-[0.9rem] leading-[1.2rem] font-[400] text-[#FFF]">
               Don`t have an account?
             </h3>
             <Link to="/sign-up">
-              <h2 className="text-[1rem] leading-[1.2rem] font-[400] text-[#FC4747] cursor-pointer">
+              <h2 className="text-[0.9rem] leading-[1.2rem] font-[400] w-max text-[#FC4747] cursor-pointer">
                 Sign Up
               </h2>
             </Link>

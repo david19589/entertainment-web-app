@@ -138,11 +138,11 @@ function SignUp() {
             />
           </form>
           <div className="flex gap-[0.5rem]">
-            <h3 className="text-[1rem] leading-[1.2rem] font-[400] text-[#FFF]">
+            <h3 className="text-[0.9rem] leading-[1.2rem] font-[400] text-[#FFF]">
               Already have an account?
             </h3>
             <Link to="/log-in">
-              <h2 className="text-[1rem] leading-[1.2rem] font-[400] text-[#FC4747] cursor-pointer">
+              <h2 className="text-[0.9rem] leading-[1.2rem] font-[400] text-[#FC4747] cursor-pointer">
                 Login
               </h2>
             </Link>
