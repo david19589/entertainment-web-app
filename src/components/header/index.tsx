@@ -1,11 +1,39 @@
 import Logo from "/src/assets/logo.svg";
 import AvatarPng from "/src/assets/image-avatar.png";
 import clsx from "clsx";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-function Header() {
+function Header(props: {
+  showAvatar: boolean;
+  setShowAvatar: (status: boolean) => void;
+}) {
+  const navigate = useNavigate();
+
   const location = useLocation();
   const currentPath = location.pathname;
+
+  const [avatarClick, setAvatarClick] = useState(false);
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("user_email");
+    const storedPassword = localStorage.getItem("user_password");
+
+    if (storedEmail && storedPassword) {
+      props.setShowAvatar(true);
+    } else {
+      props.setShowAvatar(false);
+    }
+  }, [props]);
+
+  const handleSignOut = () => {
+    if (avatarClick) {
+      props.setShowAvatar(false);
+      setAvatarClick(false);
+      navigate("/log-in");
+    }
+  };
 
   return (
     <div className="lg:px-[2.3rem] lg:rounded-2xl md:px-[1.5rem] bg-[#161D2F]">
@@ -85,11 +113,34 @@ function Header() {
             </svg>
           </Link>
         </div>
-        <img
-          className="lg:absolute lg:bottom-[4rem] lg:w-[2.5rem] md:w-[2rem] w-[1.5rem]"
-          src={AvatarPng}
-          alt="AvatarPng"
-        />
+
+        {props.showAvatar ? (
+          <img
+            onClick={() => {
+              setAvatarClick(!avatarClick);
+            }}
+            className="lg:absolute lg:bottom-[4rem] lg:w-[2.5rem] md:w-[2rem] w-[1.5rem] cursor-pointer"
+            src={AvatarPng}
+            alt="AvatarPng"
+          />
+        ) : (
+          <Link to="/log-in">
+            <h2 className="lg:absolute lg:bottom-[4rem] lg:start-2 text-[#FFF]">
+              Log in
+            </h2>
+          </Link>
+        )}
+        {avatarClick && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            onClick={handleSignOut}
+            className="absolute bottom-[7rem] bg-[#16223f] p-[0.4rem] cursor-pointer"
+          >
+            <h3 className="text-[#FFF] text-[0.9rem] w-max">Sign out</h3>
+          </motion.div>
+        )}
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ import TvSeries from "./tv-series";
 import Bookmarks from "./bookmarks";
 import Data from "./data.json";
 import { DataItem } from "./data";
+import LogIn from "./header/log-in";
+import SignUp from "./header/sign-up";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -16,7 +18,10 @@ const ScrollToTop = () => {
   return null;
 };
 
-function PageRoutes(props: { searchValue: string }) {
+function PageRoutes(props: {
+  searchValue: string;
+  setShowAvatar: (status: boolean) => void;
+}) {
   const [bookmarked, setBookmarked] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
@@ -97,6 +102,11 @@ function PageRoutes(props: { searchValue: string }) {
             />
           }
         />
+        <Route
+          path="/log-in"
+          element={<LogIn setShowAvatar={props.setShowAvatar} />}
+        />
+        <Route path="/sign-up" element={<SignUp />} />
       </Routes>
     </>
   );

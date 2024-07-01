@@ -38,7 +38,7 @@ function Trending({ Data, bookmarked, handleBookmark }: DataProps) {
               </div>
               <div
                 onClick={() => handleBookmark(item.title)}
-                className="hover:bg-[#b4b3b3] md:right-[4rem] absolute top-[1rem] right-[2rem] bg-[#10141e83] p-[0.6rem] rounded-full cursor-pointer"
+                className="hover:bg-[#b4b3b3] md:right-[2rem] absolute top-[1rem] right-[2rem] bg-[#10141e83] p-[0.6rem] rounded-full cursor-pointer"
               >
                 <img
                   src={bookmarked[item.title] ? bookmarkFullSvg : bookmarkSvg}
