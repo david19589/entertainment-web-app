@@ -42,7 +42,7 @@ function LogIn(props: { setShowAvatar: (status: boolean) => void }) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center absolute top-0 bottom-0 left-0 right-0 bg-[#10141E] px-[1.5rem]">
+    <div className="flex flex-col justify-center items-center absolute top-0 bottom-0 left-0 right-0 bg-[#10141E] px-[1.5rem] z-20">
       <img className="translate-y-[-4rem]" src={Logo} alt="Logo" />
       <motion.div
         initial={{ opacity: 0 }}

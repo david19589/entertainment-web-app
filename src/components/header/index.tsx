@@ -35,8 +35,30 @@ function Header(props: {
     }
   };
 
+  const [scrolled, setScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="lg:px-[2.3rem] lg:rounded-2xl md:px-[1.5rem] bg-[#161D2F]">
+    <div
+      className={clsx(
+        scrolled && "top-[-1rem] shadow-xl",
+        "lg:px-[2.3rem] lg:rounded-2xl lg:relative md:px-[1.5rem] bg-[#161D2F] pt-[1rem] fixed top-0 left-0 right-0 z-10 transition-all duration-500"
+      )}
+    >
       <div className="lg:flex-col lg:justify-start lg:fixed lg:top-0 lg:bottom-0 lg:left-[1.3rem] lg:py-[4rem] flex items-center justify-between px-[1rem] py-[1.13rem]">
         <img className="lg:mb-[5rem]" src={Logo} alt="Logo" />
         <div className="lg:flex-col lg:gap-[2.5rem] md:gap-[2rem] flex gap-[1.5rem]">
